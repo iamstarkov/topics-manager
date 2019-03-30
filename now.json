@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "next.config.js", "use": "@now/next" }
+  ],
+  "build": {
+    "env": {
+      "TOPICS_MANAGER_GITHUB_CLIENT_ID": "@topics_manager_github_client_id"
+    }
+  },
+  "env": {
+    "TOPICS_MANAGER_GITHUB_CLIENT_SECRET": "@topics_manager_github_client_secret"
+  }
+}
