@@ -23,7 +23,7 @@ class GithubAuthCallback extends React.Component {
       const accessToken = response.access_token;
       res.writeHead(302, {
         Location: '/',
-        'Set-Cookie': [`token=${accessToken}; SameSite=Strict; Path=/; ${dev ? '' : 'Secure'}`],
+        'Set-Cookie': [`token=${accessToken}; Max-Age=${60 * 60 /* an hour */}; SameSite=Strict; Path=/; ${dev ? '' : 'Secure'}`],
       });
       res.end();
     } else {
