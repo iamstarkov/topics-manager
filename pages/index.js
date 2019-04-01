@@ -22,7 +22,7 @@ class PageIndex extends React.Component {
     if (!token) {
       return <a href="/auth/github">login</a>;
     }
-    return <pre>Hello, {user.name}</pre>;
+    return <pre>Hello, {user.login}</pre>;
   }
 }
 
