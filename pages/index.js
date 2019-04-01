@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link'
 import cookies from 'next-cookies';
 import fetch from 'isomorphic-unfetch';
 
@@ -20,9 +21,18 @@ class PageIndex extends React.Component {
   render() {
     const { token, user } = this.props;
     if (!token) {
-      return <a href="/auth/github">login</a>;
+      return <>
+        <Link href="/login">
+          <a>login</a>
+        </Link>
+      </>
     }
-    return <pre>Hello, {user.login}</pre>;
+    return <>
+      <h1>Hello, {user.login}</h1>
+      <Link href="/logout">
+        <a>logout</a>
+      </Link>
+    </>
   }
 }
 
