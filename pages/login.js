@@ -12,6 +12,9 @@ class PageLogin extends React.Component {
     }
     return {}
   }
+  render() {
+    return <></>;
+  }
 }
 
 export default PageLogin;
