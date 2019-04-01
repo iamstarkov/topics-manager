@@ -3,7 +3,7 @@ import Router from 'next/router'
 
 const dev = process.env.NODE_ENV !== 'production';
 
-class PageLogin extends React.Component {
+class PageLogout extends React.Component {
   static async getInitialProps({ res }) {
     const redirectUrl = '/';
     if (res) {
@@ -20,5 +20,5 @@ class PageLogin extends React.Component {
   }
 }
 
-export default PageLogin;
+export default PageLogout;
 
