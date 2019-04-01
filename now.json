@@ -6,5 +6,8 @@
   "env": {
     "TOPICS_MANAGER_GITHUB_CLIENT_ID": "@topics_manager_github_client_id",
     "TOPICS_MANAGER_GITHUB_CLIENT_SECRET": "@topics_manager_github_client_secret"
-  }
+  },
+  "routes": [
+    { "src": "/_next/static/(?:[^/]+/pages|chunks|runtime)/.+", "headers": { "cache-control": "immutable" } }
+  ]
 }
