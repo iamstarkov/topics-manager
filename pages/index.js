@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link'
+import Head from 'next/head'
 import cookies from 'next-cookies';
 import fetch from 'isomorphic-unfetch';
 import Wrapper from '../components/wrapper';
@@ -23,6 +24,10 @@ class PageIndex extends React.Component {
     const { token, user } = this.props;
     return <>
       <Wrapper>
+        <Head>
+          <title>Topics Manager</title>
+          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        </Head>
         <h1>Welcome to "Topics Manager"!</h1>
         <p>
           Regardless of how many repositories you have on your GitHub account, we all can agree that its UI is not very convenient to use.
