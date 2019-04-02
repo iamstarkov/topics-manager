@@ -16,9 +16,27 @@ const get = (url, token) => fetch(coerceWithBaseUrl(url), {
   method: 'GET',
   headers: headers(token),
 });
+
+const previewGet = (url, token) => fetch(coerceWithBaseUrl(url), {
+  method: 'GET',
+  headers: {
+    ...headers(token),
+    accept: 'application/vnd.github.mercy-preview+json',
+  },
+});
+
 const post = (url, token, body) => fetch(coerceWithBaseUrl(url), {
   method: 'POST',
   headers: headers(token),
+  body: JSON.stringify(body),
+});
+
+const previewPut = (url, token, body) => fetch(coerceWithBaseUrl(url), {
+  method: 'PUT',
+  headers: {
+    ...headers(token),
+    accept: 'application/vnd.github.mercy-preview+json',
+  },
   body: JSON.stringify(body),
 });
 
@@ -39,6 +57,10 @@ const api = {
   get: (...args) => get(...args).then(parse),
   recursiveGet,
   post: (...args) => post(...args).then(parse),
+  preview: {
+    get: (...args) => previewGet(...args).then(parse),
+    put: (...args) => previewPut(...args).then(parse),
+  }
 }
 
 
