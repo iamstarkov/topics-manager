@@ -6,7 +6,7 @@ import api from '../util/api';
 import Wrapper from '../components/wrapper';
 import Layout from '../components/layout';
 
-class PageIndex extends React.Component {
+class PageDashboard extends React.Component {
   static async getInitialProps(ctx) {
     const { token } = cookies(ctx);
     let user;
@@ -28,6 +28,6 @@ class PageIndex extends React.Component {
   }
 }
 
-export default PageIndex;
+export default PageDashboard;
 
 
