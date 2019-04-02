@@ -19,6 +19,10 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "format": "prettier --write '{pages,util,components}/**/*.js'"
+  },
+  "devDependencies": {
+    "prettier": "1.16.4"
   }
 }
