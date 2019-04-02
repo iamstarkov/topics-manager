@@ -1,6 +1,6 @@
 import React from 'react'
 import Router from 'next/router'
-import fetch from 'isomorphic-unfetch';
+import api from '../../../util/api';
 
 const dev = process.env.NODE_ENV !== 'production';
 const baseUrl = dev ? 'http://localhost:3000' : 'https://topics-manager.iamstarkov.now.sh';
@@ -8,18 +8,11 @@ const baseUrl = dev ? 'http://localhost:3000' : 'https://topics-manager.iamstark
 class GithubAuthCallback extends React.Component {
   static async getInitialProps({ res, query }) {
     if (res) {
-      const response = await fetch(`https://github.com/login/oauth/access_token`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          accept: 'application/json'
-        },
-        body: JSON.stringify({
-          client_id: process.env.TOPICS_MANAGER_GITHUB_CLIENT_ID,
-          client_secret: process.env.TOPICS_MANAGER_GITHUB_CLIENT_SECRET,
-          code: query.code
-        })
-      }).then(r => r.json());
+      const response = await api.post(`https://github.com/login/oauth/access_token`, null, {
+        client_id: process.env.TOPICS_MANAGER_GITHUB_CLIENT_ID,
+        client_secret: process.env.TOPICS_MANAGER_GITHUB_CLIENT_SECRET,
+        code: query.code
+      });
       const accessToken = response.access_token;
       res.writeHead(302, {
         Location: '/',
