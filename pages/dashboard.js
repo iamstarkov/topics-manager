@@ -23,9 +23,8 @@ class PageDashboard extends React.Component {
     }
     const [user, repos] = await Promise.all([
       api.get('/user', token),
-      api.get('/user/repos?type=owner', token),
+      api.recursiveGet('/user/repos?type=owner', token),
     ]);
-
     return { user, repos };
   }
   render() {
