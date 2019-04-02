@@ -22,13 +22,7 @@ class PageIndex extends React.Component {
       <Wrapper>
         <h1>Welcome to "Topics Manager"!</h1>
         <p>
-          Regardless of how many repositories you have on your GitHub account, we all can agree that its UI is not very convenient to use.
-        </p>
-        <p>
-          This website aims to address this issue. Topics Manager will give you an consistent dashboard to overview and edit topics on your GitHub repositories in bulk and one by one.
-        </p>
-        <p>
-         Topics Manager will need access to your GitHub account's repositories in order to manage its keywords.
+          This app aims to address inconvenience of default topics editing interface. Topics Manager will give a dashboard to overview and edit topics of your GitHub repositories.
         </p>
         {!token && (
           <p>
