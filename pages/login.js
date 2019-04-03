@@ -7,8 +7,7 @@ class PageLogin extends React.Component {
       res.writeHead(302, { Location: redirectUrl });
       res.end();
     } else {
-      // eslint-disable-next-line no-restricted-globals
-      location = redirectUrl;
+      window.location = redirectUrl;
     }
     return {};
   }
