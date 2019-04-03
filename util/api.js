@@ -11,7 +11,7 @@ const headers = token => ({
   accept: "application/json"
 });
 
-const addMaxPerPage = url =>
+export const addMaxPerPage = url =>
   `${url}${url.includes("?") ? "&" : "?"}per_page=100`;
 
 const get = (url, token) =>

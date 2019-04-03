@@ -6,10 +6,11 @@ module.exports = {
     node: true,
     browser: true,
     es6: true,
+    jest: true
   },
   rules: {
-    "react/jsx-filename-extension": 0, 
+    "react/jsx-filename-extension": 0,
     "react/destructuring-assignment": 0,
-    "jsx-a11y/anchor-is-valid": 0,
-  },
+    "jsx-a11y/anchor-is-valid": 0
+  }
 };
