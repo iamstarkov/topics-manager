@@ -6,12 +6,8 @@ import cookies from "next-cookies";
 import api from "../util/api";
 import Wrapper from "../components/wrapper";
 import Layout from "../components/layout";
-import {
-  ButtonAddTopics,
-  ButtonRemoveAllTopics,
-  ButtonRename,
-  ButtonDelete
-} from "../components/buttons";
+import Topic from "../components/topic";
+import { ButtonAddTopics, ButtonRemoveAllTopics } from "../components/buttons";
 import Toggler from "../components/toggler";
 
 /* eslint-disable no-alert */
@@ -76,14 +72,6 @@ const removeAllTopicsHandler = (...args) => () => {
   removeAllTopics(...args);
 };
 
-const Topic = ({ token, repo, topics, topic }) => (
-  <>
-    <ButtonRename onClick={renameTopicHandler(token, repo, topics, topic)} />
-    {` ${topic} `}
-    <ButtonDelete onClick={removeTopicHandler(token, repo, topics, topic)} />
-  </>
-);
-
 const Repository = ({ token, repo, topics }) => (
   <>
     <a href={repo.html_url}>{repo.name}</a>{" "}
@@ -92,7 +80,11 @@ const Repository = ({ token, repo, topics }) => (
       <ul>
         {topics.names.map(topic => (
           <li key={topic}>
-            <Topic token={token} repo={repo} topics={topics} topic={topic} />
+            <Topic
+              topic={topic}
+              onRename={renameTopicHandler(token, repo, topics, topic)}
+              onDelete={removeTopicHandler(token, repo, topics, topic)}
+            />
           </li>
         ))}
         <li key="remove-all">
