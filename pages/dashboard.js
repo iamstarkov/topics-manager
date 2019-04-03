@@ -1,11 +1,14 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Link from "next/link";
-import Head from "next/head";
+import Router from "next/router";
 import cookies from "next-cookies";
 import api from "../util/api";
 import Wrapper from "../components/wrapper";
 import Layout from "../components/layout";
 
+/* eslint-disable no-alert */
+// eslint-disable-next-line no-restricted-globals
 const reload = () => location.reload();
 
 const removeTopic = (token, repo, topics, topic) => {
@@ -48,12 +51,9 @@ class PageDashboard extends React.Component {
       const redirectUrl = "/";
       if (res) {
         res.writeHead(302, { Location: redirectUrl });
-        res.end();
-        return;
-      } else {
-        Router.replace(redirectUrl);
-        return;
+        return res.end();
       }
+      return Router.replace(redirectUrl);
     }
     const user = await api.get(`/user`, token);
     // const rawRepos = await api.recursiveGet(`/user/repos?type=owner`, token);
@@ -65,6 +65,7 @@ class PageDashboard extends React.Component {
 
     return { token, user, repos, topics };
   }
+
   render() {
     const { user, repos, topics, token } = this.props;
     return (
@@ -88,6 +89,7 @@ class PageDashboard extends React.Component {
                   <a href={repo.html_url}>{repo.name}</a>{" "}
                   <button
                     title="add a list"
+                    type="button"
                     onClick={() => {
                       const rawNewTopics = prompt(
                         `Add topics to "${
@@ -109,6 +111,7 @@ class PageDashboard extends React.Component {
                         <li key={topic}>
                           <button
                             title="rename"
+                            type="button"
                             onClick={() => {
                               const oldTopic = topic;
                               const newTopic = prompt(
@@ -131,6 +134,7 @@ class PageDashboard extends React.Component {
                           {topic}{" "}
                           <button
                             title="delete"
+                            type="button"
                             onClick={() => {
                               removeTopic(token, repo, topics[i], topic);
                             }}
@@ -142,11 +146,12 @@ class PageDashboard extends React.Component {
                       <li key="remove-all">
                         <button
                           title="remove all topics"
+                          type="button"
                           onClick={() => {
                             removeAllTopics(token, repo);
                           }}
                         >
-                          💥 remove all topics
+                          ⚠ remove all topics
                         </button>
                       </li>
                     </ul>
@@ -160,5 +165,12 @@ class PageDashboard extends React.Component {
     );
   }
 }
+
+PageDashboard.propTypes = {
+  user: PropTypes.shape().isRequired,
+  repos: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  topics: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  token: PropTypes.string.isRequired
+};
 
 export default PageDashboard;

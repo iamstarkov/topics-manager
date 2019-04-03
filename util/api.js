@@ -11,7 +11,8 @@ const headers = token => ({
   accept: "application/json"
 });
 
-var addMaxPerPage = url => `${url}${url.includes("?") ? "&" : "?"}per_page=100`;
+const addMaxPerPage = url =>
+  `${url}${url.includes("?") ? "&" : "?"}per_page=100`;
 
 const get = (url, token) =>
   fetch(coerceWithBaseUrl(url), {
@@ -53,9 +54,8 @@ const recursiveGet = async (url, token, items = []) => {
   const joinedItems = items.concat(currentItems);
   if (next) {
     return recursiveGet(next.url, token, joinedItems);
-  } else {
-    return joinedItems;
   }
+  return joinedItems;
 };
 
 const api = {

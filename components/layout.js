@@ -1,3 +1,5 @@
+import React from "react";
+import PropTypes from "prop-types";
 import Head from "next/head";
 
 const defaultTitle = "Topics Manager";
@@ -5,7 +7,9 @@ const defaultTitle = "Topics Manager";
 const Layout = ({ children, title }) => (
   <>
     <Head>
-      <title>{!!title ? `${title} • ${defaultTitle}` : defaultTitle}</title>
+      <title>
+        {title !== defaultTitle ? `${title} • ${defaultTitle}` : title}
+      </title>
 
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <meta charSet="utf-8" />
@@ -41,5 +45,14 @@ const Layout = ({ children, title }) => (
     {children}
   </>
 );
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+  title: PropTypes.string
+};
+
+Layout.defaultProps = {
+  title: defaultTitle
+};
 
 export default Layout;

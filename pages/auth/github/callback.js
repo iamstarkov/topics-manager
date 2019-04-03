@@ -3,9 +3,6 @@ import Router from "next/router";
 import api from "../../../util/api";
 
 const dev = process.env.NODE_ENV !== "production";
-const baseUrl = dev
-  ? "http://localhost:3000"
-  : "https://topics-manager.iamstarkov.now.sh";
 
 class GithubAuthCallback extends React.Component {
   static async getInitialProps({ res, query }) {

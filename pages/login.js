@@ -1,5 +1,4 @@
 import React from "react";
-import Router from "next/router";
 
 class PageLogin extends React.Component {
   static async getInitialProps({ res }) {
@@ -8,10 +7,12 @@ class PageLogin extends React.Component {
       res.writeHead(302, { Location: redirectUrl });
       res.end();
     } else {
+      // eslint-disable-next-line no-restricted-globals
       location = redirectUrl;
     }
     return {};
   }
+
   render() {
     return <></>;
   }

@@ -1,8 +1,6 @@
 import React from "react";
 import Router from "next/router";
 
-const dev = process.env.NODE_ENV !== "production";
-
 class PageLogout extends React.Component {
   static async getInitialProps({ res }) {
     const redirectUrl = "/";
