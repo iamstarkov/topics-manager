@@ -12,12 +12,12 @@ export const ButtonRename = ({ onClick }) => (
 );
 ButtonRename.propTypes = propTypes;
 
-export const ButtonDelete = ({ onClick }) => (
-  <button title="delete" type="button" onClick={onClick}>
+export const ButtonRemove = ({ onClick }) => (
+  <button title="remove" type="button" onClick={onClick}>
     ╳
   </button>
 );
-ButtonDelete.propTypes = propTypes;
+ButtonRemove.propTypes = propTypes;
 
 export const ButtonAddTopics = ({ onClick }) => (
   <button title="add topics" type="button" onClick={onClick}>

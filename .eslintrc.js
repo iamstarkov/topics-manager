@@ -14,6 +14,7 @@ module.exports = {
     "jsx-a11y/anchor-is-valid": 0,
     "react/require-default-props": 0,
     "import/prefer-default-export": 0,
-    "react/prop-types": 1
+    "react/prop-types": 1,
+    "no-alert": 0
   }
 };

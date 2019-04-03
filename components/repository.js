@@ -27,7 +27,7 @@ const Repository = ({
 
 Repository.propTypes = {
   repo: PropTypes.shape().isRequired,
-  topics: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  topics: PropTypes.shape().isRequired,
   onAddTopics: PropTypes.func.isRequired,
   onRemoveAllTopics: PropTypes.func.isRequired,
   renderTopic: PropTypes.func.isRequired
