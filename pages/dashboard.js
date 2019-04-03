@@ -6,8 +6,8 @@ import cookies from "next-cookies";
 import api from "../util/api";
 import Wrapper from "../components/wrapper";
 import Layout from "../components/layout";
+import Repository from "../components/repository";
 import Topic from "../components/topic";
-import { ButtonAddTopics, ButtonRemoveAllTopics } from "../components/buttons";
 import Toggler from "../components/toggler";
 
 /* eslint-disable no-alert */
@@ -72,31 +72,6 @@ const removeAllTopicsHandler = (...args) => () => {
   removeAllTopics(...args);
 };
 
-const Repository = ({ token, repo, topics }) => (
-  <>
-    <a href={repo.html_url}>{repo.name}</a>{" "}
-    <ButtonAddTopics onClick={addTopicsHandler(token, repo, topics)} />
-    {topics.names.length !== 0 && (
-      <ul>
-        {topics.names.map(topic => (
-          <li key={topic}>
-            <Topic
-              topic={topic}
-              onRename={renameTopicHandler(token, repo, topics, topic)}
-              onDelete={removeTopicHandler(token, repo, topics, topic)}
-            />
-          </li>
-        ))}
-        <li key="remove-all">
-          <ButtonRemoveAllTopics
-            onClick={removeAllTopicsHandler(token, repo)}
-          />
-        </li>
-      </ul>
-    )}
-  </>
-);
-
 class PageDashboard extends React.Component {
   static async getInitialProps(ctx) {
     const { res } = ctx;
@@ -139,7 +114,29 @@ class PageDashboard extends React.Component {
             <ul>
               {repos.map((repo, i) => (
                 <li key={repo.id}>
-                  <Repository repo={repo} token={token} topics={topics[i]} />
+                  <Repository
+                    repo={repo}
+                    topics={topics[i]}
+                    onAddTopics={addTopicsHandler(token, repo, topics[i])}
+                    onRemoveAllTopics={removeAllTopicsHandler(token, repo)}
+                    renderTopic={topic => (
+                      <Topic
+                        topic={topic}
+                        onRename={renameTopicHandler(
+                          token,
+                          repo,
+                          topics[i],
+                          topic
+                        )}
+                        onDelete={removeTopicHandler(
+                          token,
+                          repo,
+                          topics[i],
+                          topic
+                        )}
+                      />
+                    )}
+                  />
                 </li>
               ))}
             </ul>
