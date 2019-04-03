@@ -1,8 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Head from "next/head";
+import { createGlobalStyle } from "styled-components";
 
 const defaultTitle = "Topics Manager";
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    color: ${p => p.theme.color};
+    background: ${p => p.theme.background};
+  }
+  body a {
+   color: inherit;
+  }
+`;
 
 const Layout = ({ children, title }) => (
   <>
@@ -42,7 +53,10 @@ const Layout = ({ children, title }) => (
       <meta name="msapplication-config" content="/static/browserconfig.xml" />
       <meta name="theme-color" content="#ffffff" />
     </Head>
-    {children}
+    <>
+      <GlobalStyle />
+      {children}
+    </>
   </>
 );
 

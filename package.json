@@ -10,10 +10,15 @@
     "isomorphic-unfetch": "^3.0.0",
     "next": "^8.0.4",
     "next-cookies": "^1.1.2",
+    "next-redux-wrapper": "^3.0.0-alpha.2",
     "parse-link-header": "^1.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-redux": "^6.0.1",
+    "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
     "styled-components": "^4.2.0",
     "unfetch": "^4.1.0"
   },
@@ -23,8 +28,8 @@
     "start": "next start",
     "test": "jest",
     "tdd": "jest --watch",
-    "lint": "eslint '{pages,util,components}/**/*.js'",
-    "format": "prettier --write '{pages,util,components}/**/*.js'",
+    "lint": "eslint '{ducks,pages,util,components}/**/*.js'",
+    "format": "prettier --write '{ducks,pages,util,components}/**/*.js'",
     "validate": "yarn run lint && yarn run test"
   },
   "lint-staged": {

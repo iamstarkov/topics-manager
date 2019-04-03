@@ -12,6 +12,7 @@ import {
   ButtonRename,
   ButtonDelete
 } from "../components/buttons";
+import Toggler from "../components/toggler";
 
 /* eslint-disable no-alert */
 // eslint-disable-next-line no-restricted-globals
@@ -142,6 +143,7 @@ class PageDashboard extends React.Component {
                 )
               </small>
             </h1>
+            <Toggler />
             <ul>
               {repos.map((repo, i) => (
                 <li key={repo.id}>

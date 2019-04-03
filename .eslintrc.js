@@ -11,6 +11,9 @@ module.exports = {
   rules: {
     "react/jsx-filename-extension": 0,
     "react/destructuring-assignment": 0,
-    "jsx-a11y/anchor-is-valid": 0
+    "jsx-a11y/anchor-is-valid": 0,
+    "react/require-default-props": 0,
+    "import/prefer-default-export": 0,
+    "react/prop-types": 1
   }
 };
