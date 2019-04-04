@@ -54,6 +54,16 @@ yarn
 * [Travis CI](https://travis-ci.com) to validate every pull-request
 * [Now Cloud](https://now.sh) to automatically deploy every pull-request in its own staging environment and commits to master to production
 
+## Roadmap
+
+* Utilise .env files (maybe)
+* Persist dark mode preference
+* Move data about repos and topics to the redux state
+* Do not reload a page when change is made
+* Implement a way (UI wise) to load more repositories on demand
+* Bulk editing
+
+
 ## License
 
 MIT © [Vladimir Starkov](https://iamstarkov.com/)
