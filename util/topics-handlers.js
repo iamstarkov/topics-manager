@@ -35,10 +35,16 @@ const createHandlers = token => ({
   },
   renameTopic: (repo, topics, oldTopic) => () => {
     const newTopic = prompt(`Enter new name for topic "${oldTopic}"`, oldTopic);
+    if (!newTopic) {
+      return
+    }
     renameTopic(token, repo, topics, oldTopic, newTopic).then(reload);
   },
   addTopics: (repo, topics) => () => {
     const rawNewTopics = prompt(`Enter topics, separated by space`);
+    if (!rawNewTopics) {
+      return
+    }
     const newTopics = rawNewTopics
       .split(" ")
       .map(x => x.trim())
