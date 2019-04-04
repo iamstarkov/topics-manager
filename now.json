@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "alias": "topics-manager",
   "builds": [
     { "src": "next.config.js", "use": "@now/next" }
   ],
