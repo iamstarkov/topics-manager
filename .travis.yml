@@ -1,0 +1,16 @@
+language: node_js
+node_js: 8
+
+before_install:
+  # Download latest yarn since travis defaults to v1.3.2
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH="$HOME/.yarn/bin:$PATH"
+
+install: yarn 
+
+cache:
+  yarn: true
+  directories:
+  - node_modules
+
+script: yarn validate
