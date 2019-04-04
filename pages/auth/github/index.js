@@ -2,9 +2,7 @@ import React from "react";
 import Router from "next/router";
 
 const dev = process.env.NODE_ENV !== "production";
-const baseUrl = dev
-  ? "http://localhost:3000"
-  : "https://topics-manager.iamstarkov.now.sh";
+const baseUrl = dev ? "http://localhost:3000" : "https://topics-manager.now.sh";
 
 const getRedirectUrl = ({ clientId, callbackUrl, scope }) =>
   `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${callbackUrl}&scope=${scope}`;
