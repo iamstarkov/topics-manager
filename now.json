@@ -1,6 +1,7 @@
 {
   "version": 2,
   "alias": "topics-manager",
+  "scope": "iamstarkov",
   "builds": [
     { "src": "next.config.js", "use": "@now/next" }
   ],
