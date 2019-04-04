@@ -29,7 +29,7 @@ yarn
 * `yarn dev` to run local next.js server
 * `yarn test` to run tests
 * `yarn format` to format source code
-* `yarn link` to lint source code
+* `yarn lint` to lint source code
 * `yarn validate` to run `yarn lint` and `yarn test` together, used for `pre-push` git hook
 
 ## Developer Experience stack
@@ -47,6 +47,12 @@ yarn
 * react—framework for predictable UIs
 * redux—state management library
 * styled-components—styling library
+
+## Integrations
+
+* [Renovate](https://renovatebot.com) to update to new dependencies' versions for performance/security reasons
+* [Travis CI](https://travis-ci.com) to validate every pull-request
+* [Now Cloud](https://now.sh) to automatically deploy every pull-request in its own staging environment and commits to master to production
 
 ## License
 
