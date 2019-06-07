@@ -19,7 +19,7 @@
     "redux": "4.0.1",
     "redux-devtools-extension": "2.13.8",
     "redux-thunk": "2.3.0",
-    "styled-components": "4.3.0",
+    "styled-components": "4.3.1",
     "unfetch": "4.1.0"
   },
   "scripts": {
