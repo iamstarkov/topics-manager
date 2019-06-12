@@ -14,8 +14,7 @@
 3. But set callback url as `http://localhost:3000/auth/github/callback`
 4. Hit "Register application"
 5. Copy `Client ID` and `Client Secret`
-6. Add `Client ID` as `TOPICS_MANAGER_GITHUB_CLIENT_ID` env variable
-6. Add `Client Secret` as `TOPICS_MANAGER_GITHUB_CLIENT_SECRET` env variable
+6. Rename `.env.example` to `.env` and update it with your secrets accordingly. See [dotenv usage example](https://github.com/motdotla/dotenv#usage) for reference.
 
 ## Getting started
 
@@ -53,15 +52,6 @@ yarn
 * [Renovate](https://renovatebot.com) to update to new dependencies' versions for performance/security reasons
 * [Travis CI](https://travis-ci.com) to validate every pull-request
 * [Now Cloud](https://now.sh) to automatically deploy every pull-request in its own staging environment and commits to master to production
-
-## Roadmap
-
-* Utilise .env files (maybe)
-* Persist dark mode preference
-* Move data about repos and topics to the redux state
-* Do not reload a page when change is made
-* Implement a way (UI wise) to load more repositories on demand
-* Bulk editing
 
 
 ## License

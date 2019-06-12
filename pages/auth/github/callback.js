@@ -1,8 +1,9 @@
 import React from "react";
 import Router from "next/router";
 import api from "../../../util/api";
+import "../../../util/dotenv-workaround";
 
-const dev = process.env.NODE_ENV !== "production";
+const isDev = process.env.NODE_ENV !== "production";
 
 class GithubAuthCallback extends React.Component {
   static async getInitialProps({ res, query }) {
@@ -11,8 +12,8 @@ class GithubAuthCallback extends React.Component {
         `https://github.com/login/oauth/access_token`,
         null,
         {
-          client_id: process.env.TOPICS_MANAGER_GITHUB_CLIENT_ID,
-          client_secret: process.env.TOPICS_MANAGER_GITHUB_CLIENT_SECRET,
+          client_id: process.env.CLIENT_ID,
+          client_secret: process.env.CLIENT_SECRET,
           code: query.code
         }
       );
@@ -22,7 +23,7 @@ class GithubAuthCallback extends React.Component {
         "Set-Cookie": [
           `token=${accessToken}; Max-Age=${
             60 * 60 /* an hour */
-          }; SameSite=Lax; Path=/; ${dev ? "" : "Secure"}`
+          }; SameSite=Lax; Path=/; ${isDev ? "" : "Secure"}`
         ]
       });
       res.end();
