@@ -1,8 +1,12 @@
 import React from "react";
 import Router from "next/router";
+import "../../../util/dotenv-workaround";
 
-const dev = process.env.NODE_ENV !== "production";
-const baseUrl = dev ? "http://localhost:3000" : "https://topics-manager.now.sh";
+const isDev = process.env.NODE_ENV !== "production";
+
+const baseUrl = isDev
+  ? "http://localhost:3000"
+  : "https://topics-manager.now.sh";
 
 const getRedirectUrl = ({ clientId, callbackUrl, scope }) =>
   `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${callbackUrl}&scope=${scope}`;
@@ -10,7 +14,7 @@ const getRedirectUrl = ({ clientId, callbackUrl, scope }) =>
 class GithubAuthRedirect extends React.Component {
   static async getInitialProps({ res }) {
     const redirectUrl = getRedirectUrl({
-      clientId: process.env.TOPICS_MANAGER_GITHUB_CLIENT_ID,
+      clientId: process.env.CLIENT_ID,
       callbackUrl: `${baseUrl}/auth/github/callback`,
       scope: "user,public_repo"
     });
