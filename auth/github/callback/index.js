@@ -36,7 +36,7 @@ module.exports = async (req, res) => {
   const state = JSON.parse(query.state || {});
   const { deploymentId } = state;
 
-  if (!isDev && deploymentId) {
+  if (deploymentId) {
     res.writeHead(302, {
       Location: url.format({
         protocol: "https",
