@@ -29,8 +29,8 @@
     "start": "next start",
     "test": "jest",
     "tdd": "jest --watch",
-    "lint": "eslint '{ducks,pages,util,components}/**/*.js'",
-    "format": "prettier --write '{ducks,pages,util,components}/**/*.js'",
+    "lint": "eslint '{auth,ducks,pages,util,components}/**/*.js'",
+    "format": "prettier --write '{auth,ducks,pages,util,components}/**/*.js'",
     "validate": "yarn run lint && yarn run test"
   },
   "lint-staged": {

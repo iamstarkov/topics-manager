@@ -3,7 +3,8 @@
   "name": "topics-manager",
   "alias": "topics-manager",
   "builds": [
-    { "src": "next.config.js", "use": "@now/next" }
+    { "src": "next.config.js", "use": "@now/next" },
+    { "src": "auth/**/*.js", "use": "@now/node" }
   ],
   "env": {
     "CLIENT_ID": "@topics_manager_github_client_id",
