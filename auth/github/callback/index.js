@@ -51,6 +51,9 @@ module.exports = async (req, res) => {
         protocol: deploymentHost === "localhost:3000" ? "http" : "https",
         host: deploymentHost,
         pathname: "/auth/github/callback",
+        // deploymentHost needs to be removed,
+        // because it was used to get here
+        // and it is not needed anymore
         query: evolve(
           {
             state: pipe(
