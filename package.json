@@ -30,8 +30,8 @@
     "start": "next start",
     "test": "jest",
     "tdd": "jest --watch",
-    "lint": "eslint '{auth,ducks,pages,util,components}/**/*.js'",
-    "format": "prettier --write '{auth,ducks,pages,util,components}/**/*.js'",
+    "lint": "eslint '**/*.js'",
+    "format": "prettier --write '**/*.js'",
     "validate": "yarn run lint && yarn run test"
   },
   "devDependencies": {
