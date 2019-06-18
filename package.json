@@ -30,22 +30,9 @@
     "start": "next start",
     "test": "jest",
     "tdd": "jest --watch",
-    "lint": "eslint '{auth,ducks,pages,util,components}/**/*.js'",
-    "format": "prettier --write '{auth,ducks,pages,util,components}/**/*.js'",
+    "lint": "eslint '**/*.js'",
+    "format": "prettier --write '**/*.js'",
     "validate": "yarn run lint && yarn run test"
-  },
-  "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "eslint",
-      "git add"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn run validate"
-    }
   },
   "devDependencies": {
     "@babel/core": "7.4.5",
