@@ -34,19 +34,6 @@
     "format": "prettier --write '{auth,ducks,pages,util,components}/**/*.js'",
     "validate": "yarn run lint && yarn run test"
   },
-  "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "eslint",
-      "git add"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn run validate"
-    }
-  },
   "devDependencies": {
     "@babel/core": "7.4.5",
     "babel-eslint": "10.0.2",
