@@ -25,7 +25,7 @@
     "unfetch": "4.1.0"
   },
   "scripts": {
-    "dev": "next",
+    "dev": "now dev",
     "build": "next build",
     "start": "next start",
     "test": "jest",
@@ -47,6 +47,7 @@
     "husky": "2.4.1",
     "jest": "24.8.0",
     "lint-staged": "8.2.1",
+    "now": "^15.5.0",
     "prettier": "1.18.2"
   }
 }
