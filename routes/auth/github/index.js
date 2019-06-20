@@ -14,7 +14,10 @@ module.exports = (req, res) => {
   const redirect_uri = "https://topics-manager.now.sh/auth/github/callback";
   const client_id = process.env.CLIENT_ID;
   const scope = "user public_repo";
-  const state = JSON.stringify({ deploymentHost });
+  const state = JSON.stringify({
+    deploymentHost,
+    redirectPath: req.query.redirectPath
+  });
 
   res.writeHead(302, {
     Location: `https://github.com/login/oauth/authorize${url.format({

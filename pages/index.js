@@ -24,10 +24,7 @@ class PageIndex extends React.Component {
           </p>
           {!token && (
             <p>
-              <Link href="/login">
-                <a>Login with GitHub</a>
-              </Link>{" "}
-              to start.
+              <a href="/login">Login with GitHub</a> to start.
             </p>
           )}
           {token && (

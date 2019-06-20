@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Link from "next/link";
 import Router from "next/router";
 import cookies from "next-cookies";
+import { URL } from "url";
 import api from "../util/api";
 import createHandlers from "../util/topics-handlers";
 import Wrapper from "../components/wrapper";
@@ -13,15 +13,23 @@ import Toggler from "../components/toggler";
 
 class PageDashboard extends React.Component {
   static async getInitialProps(ctx) {
-    const { res } = ctx;
+    const { req, res } = ctx;
     const { token } = cookies(ctx);
     if (!token) {
-      const redirectUrl = "/";
+      const redirectUrl = u =>
+        `/login?redirectPath=${encodeURIComponent(u.pathname + u.search)}`;
       if (res) {
-        res.writeHead(302, { Location: redirectUrl });
+        const { headers } = req;
+        const currentUrl = new URL(
+          `${headers["x-forwarded-proto"]}://${headers["x-forwarded-host"]}${
+            req.url
+          }`
+        );
+        res.writeHead(302, { Location: redirectUrl(currentUrl) });
         return res.end();
       }
-      return Router.replace(redirectUrl);
+      // eslint-disable-next-line no-restricted-globals
+      return Router.replace(redirectUrl(new URL(location.href)));
     }
     const rawRepos = await api.get(`/user/repos?type=owner`, token);
     const repos = rawRepos.filter(x => !x.fork).filter(x => !x.archived);
@@ -41,11 +49,7 @@ class PageDashboard extends React.Component {
           <h1>
             Dashboard{" "}
             <small>
-              (
-              <Link href="/logout">
-                <a>logout</a>
-              </Link>
-              )
+              (<a href="/logout">logout</a>)
             </small>
           </h1>
           <Toggler />

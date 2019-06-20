@@ -23,6 +23,13 @@ const getDeploymentHost = query => {
     return "";
   }
 };
+const getRedirectPath = query => {
+  try {
+    return JSON.parse(query.state).redirectPath || "/";
+  } catch (e) {
+    return "/";
+  }
+};
 
 // https://regexr.com/4fs7k
 const deploymenHostRegExp = /^topics-manager(?:(?:\.(.*?))|(?:-(.*?)))?\.now\.sh$/;
@@ -41,6 +48,7 @@ module.exports = async (req, res) => {
   const { query } = req;
   const authorizationCode = query.code;
   const deploymentHost = getDeploymentHost(query);
+  const redirectPath = getRedirectPath(query);
 
   // 0. No authorization code => throw 400
   // 1. isNotValid(deploymentHost)) => throw 400
@@ -67,7 +75,7 @@ module.exports = async (req, res) => {
       { client_id, client_secret, code: authorizationCode }
     );
     res.writeHead(302, {
-      Location: "/",
+      Location: redirectPath,
       "Set-Cookie": `token=${access_token}; Max-Age=3600; SameSite=Lax; Path=/; {isDev ? "" : "Secure"}`
     });
     return res.end();
