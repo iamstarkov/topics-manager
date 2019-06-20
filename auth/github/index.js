@@ -5,31 +5,21 @@ if (process.env.NOW_REGION === "dev1") {
 
 const url = require("url");
 
-const isDev = process.env.NODE_ENV !== "production";
-const prodAlias = "topics-manager.now.sh";
+const isProd = process.env.NODE_ENV === "production";
 
+/* eslint-disable camelcase */
 module.exports = (req, res) => {
-  const {
-    headers: { host }
-  } = req;
-  const deploymentHost = isDev ? "localhost:3000" : host;
-  const redirectUrl = url.format({
-    protocol: "https",
-    host: "github.com",
-    pathname: "/login/oauth/authorize",
-    query: {
-      client_id: process.env.CLIENT_ID,
-      redirect_uri: url.format({
-        protocol: "https",
-        host: "topics-manager.now.sh",
-        pathname: "/auth/github/callback"
-      }),
-      scope: "user public_repo",
-      ...(host !== prodAlias
-        ? { state: JSON.stringify({ deploymentHost }) }
-        : {})
-    }
+  const deploymentHost = isProd ? req.headers.host : "localhost:3000";
+
+  const redirect_uri = "https://topics-manager.now.sh/auth/github/callback";
+  const client_id = process.env.CLIENT_ID;
+  const scope = "user public_repo";
+  const state = JSON.stringify({ deploymentHost });
+
+  res.writeHead(302, {
+    Location: `https://github.com/login/oauth/authorize${url.format({
+      query: { client_id, redirect_uri, scope, state }
+    })}`
   });
-  res.writeHead(302, { Location: redirectUrl });
-  res.end();
+  return res.end();
 };

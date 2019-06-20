@@ -14,7 +14,6 @@
     "next-redux-wrapper": "3.0.0-alpha.3",
     "parse-link-header": "1.0.1",
     "prop-types": "15.7.2",
-    "ramda": "0.26.1",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-redux": "7.1.0",
@@ -25,13 +24,13 @@
     "unfetch": "4.1.0"
   },
   "scripts": {
-    "dev": "next",
+    "dev": "now dev",
     "build": "next build",
     "start": "next start",
     "test": "jest",
     "tdd": "jest --watch",
     "lint": "eslint '**/*.js'",
-    "format": "prettier --write '**/*.js'",
+    "format": "prettier --write '**/*.js' --check",
     "validate": "yarn run lint && yarn run test"
   },
   "devDependencies": {
@@ -47,6 +46,7 @@
     "husky": "2.4.1",
     "jest": "24.8.0",
     "lint-staged": "8.2.1",
+    "now": "^15.5.0",
     "prettier": "1.18.2"
   }
 }

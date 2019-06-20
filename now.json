@@ -11,6 +11,7 @@
     "CLIENT_SECRET": "@topics_manager_github_client_secret"
   },
   "routes": [
+    { "src": "/auth/github/callback", "dest": "auth/github/callback.js" },
     { "src": "/_next/static/(?:[^/]+/pages|chunks|runtime)/.+", "headers": { "cache-control": "immutable" } }
   ]
 }
