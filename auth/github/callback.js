@@ -3,80 +3,86 @@ if (process.env.NOW_REGION === "dev1") {
   require("dotenv/config");
 }
 
-const url = require("url");
+const http = require("http");
 const fetch = require("isomorphic-unfetch");
-const evolve = require("ramda/src/evolve");
-const pipe = require("ramda/src/pipe");
-const dissoc = require("ramda/src/dissoc");
 
-const isDev = process.env.NODE_ENV !== "production";
-const prodAlias = "topics-manager.now.sh";
-
-// https://regexr.com/4fs7k
-const deploymenHostRegExp = /topics-manager(?:(?:\.(.*?))|(?:-(.*?)))?\.now\.sh/;
-
-const accessToken = code =>
-  fetch(`https://github.com/login/oauth/access_token`, {
+const postJson = (url, body) =>
+  fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       accept: "application/json"
     },
-    body: JSON.stringify({
-      client_id: process.env.CLIENT_ID,
-      client_secret: process.env.CLIENT_SECRET,
-      code
-    })
-  })
-    .then(response => response.json())
-    .then(result => result.access_token);
+    body: JSON.stringify(body)
+  }).then(response => response.json());
 
+const getDeploymentHost = query => {
+  try {
+    return JSON.parse(query.state).deploymentHost || "";
+  } catch (e) {
+    return "";
+  }
+};
+
+// https://regexr.com/4fs7k
+const deploymenHostRegExp = /^topics-manager(?:(?:\.(.*?))|(?:-(.*?)))?\.now\.sh$/;
+const isValidDeploymentHost = host =>
+  host === "" || deploymenHostRegExp.test(host) || host === "localhost:3000";
+
+const failWith = (res, x) =>
+  res
+    .status(x)
+    .send(`${x} ${http.STATUS_CODES[x]}`)
+    .end();
+
+/* eslint-disable camelcase */
 module.exports = async (req, res) => {
-  const {
-    headers: { host }
-  } = req;
-  const { query } = url.parse(req.url, true);
-  const state = query.state ? JSON.parse(query.state) : {};
-  const { deploymentHost } = state;
-  const isValidDeploymentHost =
-    deploymenHostRegExp.test(deploymentHost) ||
-    deploymentHost === "localhost:3000";
+  const { host } = req.headers;
+  const { query } = req;
+  const authorizationCode = query.code;
+  const deploymentHost = getDeploymentHost(query);
 
-  // it is almost fine to redirect anywhere with auth code,
-  // but in order to mitigate risks as in auth code exposure
-  // redirects are limited to deployments and localhost
-  if (prodAlias === host && isValidDeploymentHost) {
+  // 0. No authorization code => throw 400
+  // 1. isNotValid(deploymentHost)) => throw 400
+  // 2. if no deploymentHost or its equal to host => retrieve access token
+  // 3. (deploymentHost !== host) => redirectTo(deploymentHost)
+  // 4. should be unreachable => throw 400
+
+  // 0. No authorization code => throw 400
+  if (!authorizationCode) {
+    return failWith(res, 400);
+  }
+
+  // 1. isNotValid(deploymentHost)) => throw 400
+  if (!isValidDeploymentHost(deploymentHost)) {
+    return failWith(res, 400);
+  }
+
+  // 2. if no deploymentHost or its equal to host => retrieve access token
+  if (deploymentHost === "" || deploymentHost === host) {
+    const client_id = process.env.CLIENT_ID;
+    const client_secret = process.env.CLIENT_SECRET;
+    const { access_token } = await postJson(
+      `https://github.com/login/oauth/access_token`,
+      { client_id, client_secret, code: authorizationCode }
+    );
     res.writeHead(302, {
-      Location: url.format({
-        protocol: deploymentHost === "localhost:3000" ? "http" : "https",
-        host: deploymentHost,
-        pathname: "/auth/github/callback",
-        // deploymentHost needs to be removed,
-        // because it was used to get here
-        // and it is not needed anymore
-        query: evolve(
-          {
-            state: pipe(
-              JSON.parse,
-              dissoc("deploymentHost"),
-              JSON.stringify
-            )
-          },
-          query
-        )
-      })
+      Location: "/",
+      "Set-Cookie": `token=${access_token}; Max-Age=3600; SameSite=Lax; Path=/; {isDev ? "" : "Secure"}`
     });
     return res.end();
   }
 
-  const token = await accessToken(query.code);
-  res.writeHead(302, {
-    Location: "/",
-    "Set-Cookie": [
-      `token=${token}; Max-Age=${
-        60 * 60 /* an hour */
-      }; SameSite=Lax; Path=/; ${isDev ? "" : "Secure"}`
-    ]
-  });
-  return res.end();
+  // 3. (deploymentHost !== host) => redirectTo(deploymentHost)
+  if (deploymentHost !== host) {
+    const proto = deploymentHost === "localhost:3000" ? "http" : "https";
+
+    res.writeHead(302, {
+      Location: `${proto}://${deploymentHost}${req.url}`
+    });
+    return res.end();
+  }
+
+  // 4. should be unreachable => throw 400
+  return failWith(res, 400);
 };

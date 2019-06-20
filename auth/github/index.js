@@ -21,5 +21,5 @@ module.exports = (req, res) => {
       query: { client_id, redirect_uri, scope, state }
     })}`
   });
-  res.end();
+  return res.end();
 };
