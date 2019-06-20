@@ -4,14 +4,17 @@
   "alias": "topics-manager",
   "builds": [
     { "src": "next.config.js", "use": "@now/next" },
-    { "src": "auth/**/*.js", "use": "@now/node" }
+    { "src": "routes/**/*.js", "use": "@now/node" }
   ],
   "env": {
     "CLIENT_ID": "@topics_manager_github_client_id",
     "CLIENT_SECRET": "@topics_manager_github_client_secret"
   },
   "routes": [
-    { "src": "/auth/github/callback", "dest": "auth/github/callback.js" },
+    { "src": "/auth/github", "dest": "routes/auth/github/index.js" },
+    { "src": "/auth/github/callback", "dest": "routes/auth/github/callback.js" },
+    { "src": "/login", "dest": "routes/login.js" },
+    { "src": "/logout", "dest": "routes/logout.js" },
     { "src": "/_next/static/(?:[^/]+/pages|chunks|runtime)/.+", "headers": { "cache-control": "immutable" } }
   ]
 }
