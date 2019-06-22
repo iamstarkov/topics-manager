@@ -24,7 +24,10 @@ class PageIndex extends React.Component {
           </p>
           {!token && (
             <p>
-              <a href="/login">Login with GitHub</a> to start.
+              <Link href="/dashboard">
+                <a>Login with GitHub</a>
+              </Link>{" "}
+              to start.
             </p>
           )}
           {token && (
@@ -32,11 +35,7 @@ class PageIndex extends React.Component {
               <Link href="/dashboard">
                 <a>Open dashboard</a>
               </Link>{" "}
-              to start or{" "}
-              <Link href="/logout">
-                <a>logout</a>
-              </Link>{" "}
-              to finish the session.
+              to start or <a href="/logout">logout</a> to finish the session.
             </p>
           )}
         </Wrapper>
