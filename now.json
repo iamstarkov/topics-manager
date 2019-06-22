@@ -2,6 +2,7 @@
   "version": 2,
   "name": "topics-manager",
   "alias": "topics-manager",
+  "regions": ["arn", "bru", "sfo"],
   "builds": [
     { "src": "next.config.js", "use": "@now/next" },
     { "src": "routes/**/*.js", "use": "@now/node" }

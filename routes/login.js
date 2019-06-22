@@ -1,4 +1,5 @@
 module.exports = (req, res) => {
-  res.writeHead(302, { Location: `/auth/github` });
+  const redirectPath = req.query.redirectPath || "/";
+  res.writeHead(302, { Location: `/auth/github?redirectPath=${redirectPath}` });
   return res.end();
 };

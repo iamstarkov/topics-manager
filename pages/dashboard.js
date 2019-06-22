@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Link from "next/link";
-import Router from "next/router";
 import cookies from "next-cookies";
 import api from "../util/api";
+import * as auth from "../util/auth";
 import createHandlers from "../util/topics-handlers";
 import Wrapper from "../components/wrapper";
 import Layout from "../components/layout";
@@ -13,15 +12,9 @@ import Toggler from "../components/toggler";
 
 class PageDashboard extends React.Component {
   static async getInitialProps(ctx) {
-    const { res } = ctx;
     const { token } = cookies(ctx);
     if (!token) {
-      const redirectUrl = "/";
-      if (res) {
-        res.writeHead(302, { Location: redirectUrl });
-        return res.end();
-      }
-      return Router.replace(redirectUrl);
+      return auth.redirectToLogin(ctx);
     }
     const rawRepos = await api.get(`/user/repos?type=owner`, token);
     const repos = rawRepos.filter(x => !x.fork).filter(x => !x.archived);
@@ -34,6 +27,9 @@ class PageDashboard extends React.Component {
 
   render() {
     const { repos, topics, token } = this.props;
+    if (!token) {
+      return <></>;
+    }
     const handlers = createHandlers(token);
     return (
       <Layout title="Dashboard">
@@ -41,11 +37,7 @@ class PageDashboard extends React.Component {
           <h1>
             Dashboard{" "}
             <small>
-              (
-              <Link href="/logout">
-                <a>logout</a>
-              </Link>
-              )
+              (<a href="/logout">logout</a>)
             </small>
           </h1>
           <Toggler />
@@ -75,9 +67,9 @@ class PageDashboard extends React.Component {
 }
 
 PageDashboard.propTypes = {
-  repos: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  topics: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  token: PropTypes.string.isRequired
+  repos: PropTypes.arrayOf(PropTypes.shape()),
+  topics: PropTypes.arrayOf(PropTypes.shape()),
+  token: PropTypes.string
 };
 
 export default PageDashboard;
