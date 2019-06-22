@@ -1,13 +1,5 @@
-const url = require("url");
-
 module.exports = (req, res) => {
-  res.writeHead(302, {
-    Location: url.format({
-      pathname: "/auth/github",
-      query: {
-        redirectPath: req.query.redirectPath || "/"
-      }
-    })
-  });
+  const redirectPath = req.query.redirectPath || "/";
+  res.writeHead(302, { Location: `/auth/github?redirectPath=${redirectPath}` });
   return res.end();
 };
