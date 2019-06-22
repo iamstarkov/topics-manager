@@ -4,6 +4,7 @@ if (process.env.NOW_REGION === "dev1") {
 }
 
 const http = require("http");
+const urlParse = require("url").parse;
 const fetch = require("isomorphic-unfetch");
 
 const postJson = (url, body) =>
@@ -36,6 +37,18 @@ const deploymenHostRegExp = /^topics-manager(?:(?:\.(.*?))|(?:-(.*?)))?\.now\.sh
 const isValidDeploymentHost = host =>
   host === "" || deploymenHostRegExp.test(host) || host === "localhost:3000";
 
+const isValidRedirectPath = inputPath => {
+  const rawPath = urlParse(inputPath);
+  if (
+    rawPath.host === null &&
+    rawPath.protocol === null &&
+    rawPath.path !== ""
+  ) {
+    return true;
+  }
+  return false;
+};
+
 const failWith = (res, x) =>
   res
     .status(x)
@@ -52,9 +65,10 @@ module.exports = async (req, res) => {
 
   // 0. No authorization code => throw 400
   // 1. isNotValid(deploymentHost)) => throw 400
-  // 2. if no deploymentHost or its equal to host => retrieve access token
-  // 3. (deploymentHost !== host) => redirectTo(deploymentHost)
-  // 4. should be unreachable => throw 400
+  // 2. isNotValid(redirectPath)) => throw 400
+  // 3. if no deploymentHost or its equal to host => retrieve access token
+  // 4. (deploymentHost !== host) => redirectTo(deploymentHost)
+  // 5. should be unreachable => throw 400
 
   // 0. No authorization code => throw 400
   if (!authorizationCode) {
@@ -66,7 +80,12 @@ module.exports = async (req, res) => {
     return failWith(res, 400);
   }
 
-  // 2. if no deploymentHost or its equal to host => retrieve access token
+  // 2. isNotValid(redirectPath)) => throw 400
+  if (!isValidRedirectPath(redirectPath)) {
+    return failWith(res, 400);
+  }
+
+  // 3. if no deploymentHost or its equal to host => retrieve access token
   if (deploymentHost === "" || deploymentHost === host) {
     const client_id = process.env.CLIENT_ID;
     const client_secret = process.env.CLIENT_SECRET;
@@ -81,7 +100,7 @@ module.exports = async (req, res) => {
     return res.end();
   }
 
-  // 3. (deploymentHost !== host) => redirectTo(deploymentHost)
+  // 4. (deploymentHost !== host) => redirectTo(deploymentHost)
   if (deploymentHost !== host) {
     const proto = deploymentHost === "localhost:3000" ? "http" : "https";
 
@@ -91,6 +110,6 @@ module.exports = async (req, res) => {
     return res.end();
   }
 
-  // 4. should be unreachable => throw 400
+  // 5. should be unreachable => throw 400
   return failWith(res, 400);
 };
