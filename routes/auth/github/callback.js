@@ -97,7 +97,9 @@ module.exports = async (req, res) => {
     );
     res.writeHead(302, {
       Location: redirectPath,
-      "Set-Cookie": `token=${access_token}; Max-Age=3600; SameSite=Lax; Path=/; {isDev ? "" : "Secure"}`
+      "Set-Cookie": `token=${access_token}; Max-Age=3600; SameSite=Lax; Path=/; HttpOnly; ${
+        isDev ? "" : "Secure"
+      }`
     });
     return res.end();
   }
