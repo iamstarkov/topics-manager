@@ -7,6 +7,8 @@ const http = require("http");
 const urlParse = require("url").parse;
 const fetch = require("isomorphic-unfetch");
 
+const isDev = process.env.NOW_REGION === "dev1";
+
 const postJson = (url, body) =>
   fetch(url, {
     method: "POST",
@@ -57,7 +59,7 @@ const failWith = (res, x) =>
 
 /* eslint-disable camelcase */
 module.exports = async (req, res) => {
-  const { host } = req.headers;
+  const host = req.headers["x-forwarded-host"];
   const { query } = req;
   const authorizationCode = query.code;
   const deploymentHost = getDeploymentHost(query);
@@ -95,14 +97,16 @@ module.exports = async (req, res) => {
     );
     res.writeHead(302, {
       Location: redirectPath,
-      "Set-Cookie": `token=${access_token}; Max-Age=3600; SameSite=Lax; Path=/; {isDev ? "" : "Secure"}`
+      "Set-Cookie": `token=${access_token}; Max-Age=3600; SameSite=Lax; Path=/; HttpOnly; ${
+        isDev ? "" : "Secure"
+      }`
     });
     return res.end();
   }
 
   // 4. (deploymentHost !== host) => redirectTo(deploymentHost)
   if (deploymentHost !== host) {
-    const proto = deploymentHost === "localhost:3000" ? "http" : "https";
+    const proto = isDev ? "http" : "https";
 
     res.writeHead(302, {
       Location: `${proto}://${deploymentHost}${req.url}`
