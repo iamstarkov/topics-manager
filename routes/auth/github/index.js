@@ -5,11 +5,9 @@ if (process.env.NOW_REGION === "dev1") {
 
 const url = require("url");
 
-const isProd = process.env.NODE_ENV === "production";
-
 /* eslint-disable camelcase */
 module.exports = (req, res) => {
-  const deploymentHost = isProd ? req.headers.host : "localhost:3000";
+  const deploymentHost = req.headers["x-forwarded-host"];
 
   const redirect_uri = "https://topics-manager.now.sh/auth/github/callback";
   const client_id = process.env.CLIENT_ID;
