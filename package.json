@@ -5,6 +5,9 @@
   "repository": "git@github.com:iamstarkov/topics-manager.git",
   "author": "Vladimir Starkov <iamstarkov@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": "10.x"
+  },
   "private": true,
   "dependencies": {
     "dotenv": "8.0.0",
