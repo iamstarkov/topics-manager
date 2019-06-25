@@ -106,7 +106,7 @@ module.exports = async (req, res) => {
 
   // 4. (deploymentHost !== host) => redirectTo(deploymentHost)
   if (deploymentHost !== host) {
-    const proto = isDev ? "http" : "https";
+    const proto = deploymentHost === "localhost:3000" ? "http" : "https";
 
     res.writeHead(302, {
       Location: `${proto}://${deploymentHost}${req.url}`
