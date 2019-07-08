@@ -22,7 +22,7 @@ export default function initUrqlClient(initialState, token) {
     const headers = !token ? {} : { Authorization: `Bearer ${token}` };
 
     urqlClient = createClient({
-      url: "https://api.graph.cool/simple/v1/cixmkt2ul01q00122mksg82pn",
+      url: "https://api.github.com/graphql",
       // Active suspense mode on the server-side
       suspense: isServer,
       exchanges: [dedupExchange, cacheExchange, ssrCache, fetchExchange],

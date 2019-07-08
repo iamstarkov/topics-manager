@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import cookies from "next-cookies";
+import gql from "graphql-tag";
+import { useQuery } from "urql";
 import api from "../util/api";
 import * as auth from "../util/auth";
 import createHandlers from "../util/topics-handlers";
@@ -9,6 +11,29 @@ import Layout from "../components/layout";
 import Repository from "../components/repository";
 import Topic from "../components/topic";
 import Toggler from "../components/toggler";
+
+const getLogin = gql`
+  query {
+    viewer {
+      login
+    }
+  }
+`;
+
+const Username = () => {
+  const [res] = useQuery({
+    query: getLogin
+  });
+
+  if (res.fetching) {
+    return "Loading...";
+  }
+  if (res.error) {
+    return "Oh no!";
+  }
+
+  return <span>{res.data.viewer.login}</span>;
+};
 
 class PageDashboard extends React.Component {
   static async getInitialProps(ctx) {
@@ -39,6 +64,7 @@ class PageDashboard extends React.Component {
             <small>
               (<a href="/logout">logout</a>)
             </small>
+            <Username />
           </h1>
           <Toggler />
           <ul>
