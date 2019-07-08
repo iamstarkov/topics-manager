@@ -33,4 +33,6 @@ class CustomApp extends App {
   }
 }
 
-export default withUrqlClient(withRedux(initStore)(CustomApp));
+const enhance = x => withUrqlClient(withRedux(initStore)(x));
+
+export default enhance(CustomApp);

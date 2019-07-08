@@ -1,4 +1,5 @@
 import React from "react";
+import nextCookies from "next-cookies";
 
 import ssrPrepass from "react-ssr-prepass";
 import initUrqlClient from "./init-client";
@@ -7,6 +8,7 @@ const withUrqlClient = App => {
   return class WithUrql extends React.Component {
     static async getInitialProps(ctx) {
       const { Component, router } = ctx;
+      const { token } = nextCookies(ctx.ctx);
 
       // Run the wrapped component's getInitialProps function
       let appProps = {};
@@ -16,11 +18,11 @@ const withUrqlClient = App => {
 
       // getInitialProps is universal, but we only want
       // to run server-side rendered suspense on the server
-      if (process.browser) {
+      if (typeof window !== "undefined") {
         return appProps;
       }
 
-      const [urqlClient, ssrCache] = initUrqlClient();
+      const [urqlClient, ssrCache] = initUrqlClient({}, token);
 
       // Run suspense and hence all urql queries
       await ssrPrepass(
@@ -36,10 +38,7 @@ const withUrqlClient = App => {
       // Extract the SSR query data from urql's SSR cache
       const urqlState = ssrCache.extractData();
 
-      return {
-        ...appProps,
-        urqlState
-      };
+      return { ...appProps, urqlState, token };
     }
 
     constructor(props) {
@@ -49,7 +48,7 @@ const withUrqlClient = App => {
         this.urqlClient = props.urqlClient;
       } else {
         // Create the urql client and rehydrate the prefetched data
-        const [urqlClient] = initUrqlClient(props.urqlState);
+        const [urqlClient] = initUrqlClient(props.urqlState, props.token);
         this.urqlClient = urqlClient;
       }
     }
