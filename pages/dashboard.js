@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import cookies from "next-cookies";
 import gql from "graphql-tag";
-import { useQuery } from "urql";
+import { useQuery, useMutation } from "urql";
 import api from "../util/api";
 import * as auth from "../util/auth";
 import createHandlers from "../util/topics-handlers";
@@ -53,6 +53,15 @@ const getRepos = gql`
   }
 `;
 
+// mutation removeTopics($id: String!) {
+const removeAllTopics = gql`
+  mutation removeTopics($id: ID!) {
+    updateTopics(input: { repositoryId: $id, topicNames: [] }) {
+      clientMutationId
+    }
+  }
+`
+
 const Username = () => {
   const [{ data }] = useQuery({ query: getLogin });
 
@@ -66,6 +75,7 @@ const Repos = () => {
     query: getRepos,
     variables: { number_of_repos: 10 }
   });
+  const [_, executeRemoveAllTopicsMutation] = useMutation(removeAllTopics);
   return (
     <ul>
       {data.viewer.repositories.edges
@@ -78,7 +88,7 @@ const Repos = () => {
                 names: repo.repositoryTopics.edges.map(x => x.node.topic.name)
               }}
               onAddTopics={noop}
-              onRemoveAllTopics={noop}
+              onRemoveAllTopics={() => executeRemoveAllTopicsMutation({ id: repo.id })}
               renderTopic={topic => (
                 <Topic topic={topic} onRename={noop} onRemove={noop} />
               )}
