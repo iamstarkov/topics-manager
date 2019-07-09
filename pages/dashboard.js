@@ -20,19 +20,72 @@ const getLogin = gql`
   }
 `;
 
+const getRepos = gql`
+  query($number_of_repos: Int!) {
+    viewer {
+      repositories(
+        first: $number_of_repos
+        affiliations: OWNER
+        ownerAffiliations: OWNER
+        isLocked: false
+        isFork: false
+        orderBy: { field: NAME, direction: ASC }
+      ) {
+        edges {
+          node {
+            id
+            nameWithOwner
+            name
+            repositoryTopics(first: 100) {
+              edges {
+                node {
+                  topic {
+                    name
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 const Username = () => {
-  const [res] = useQuery({
-    query: getLogin
+  const [{ data }] = useQuery({ query: getLogin });
+
+  return <span>{data.viewer.login}</span>;
+};
+
+const noop = () => {};
+
+const Repos = () => {
+  const [{ data }] = useQuery({
+    query: getRepos,
+    variables: { number_of_repos: 10 }
   });
-
-  if (res.fetching) {
-    return "Loading...";
-  }
-  if (res.error) {
-    return "Oh no!";
-  }
-
-  return <span>{res.data.viewer.login}</span>;
+  return (
+    <ul>
+      {data.viewer.repositories.edges
+        .map(x => x.node)
+        .map(repo => (
+          <li key={repo.id}>
+            <Repository
+              repo={{ html_url: repo.url, name: repo.name }}
+              topics={{
+                names: repo.repositoryTopics.edges.map(x => x.node.topic.name)
+              }}
+              onAddTopics={noop}
+              onRemoveAllTopics={noop}
+              renderTopic={topic => (
+                <Topic topic={topic} onRename={noop} onRemove={noop} />
+              )}
+            />
+          </li>
+        ))}
+    </ul>
+  );
 };
 
 class PageDashboard extends React.Component {
@@ -67,6 +120,7 @@ class PageDashboard extends React.Component {
             <Username />
           </h1>
           <Toggler />
+          <Repos />
           <ul>
             {repos.map((repo, i) => (
               <li key={repo.id}>
