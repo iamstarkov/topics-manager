@@ -34,6 +34,7 @@ const getRepos = gql`
         edges {
           node {
             id
+            url
             nameWithOwner
             name
             repositoryTopics(first: 100) {
