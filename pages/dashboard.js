@@ -57,7 +57,17 @@ const getRepos = gql`
 const removeAllTopics = gql`
   mutation removeTopics($id: ID!) {
     updateTopics(input: { repositoryId: $id, topicNames: [] }) {
-      clientMutationId
+      repository {
+        repositoryTopics(first: 100) {
+          edges {
+            node {
+              topic {
+                name
+              }
+            }
+          }
+        }
+      }
     }
   }
 `
