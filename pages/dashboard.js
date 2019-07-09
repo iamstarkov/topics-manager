@@ -54,9 +54,9 @@ const getRepos = gql`
 `;
 
 // mutation removeTopics($id: String!) {
-const removeAllTopics = gql`
-  mutation removeTopics($id: ID!) {
-    updateTopics(input: { repositoryId: $id, topicNames: [] }) {
+const updateTopics = gql`
+  mutation updateTopics($id: ID!, $topicNames: [String!]!) {
+    updateTopics(input: { repositoryId: $id, topicNames: $topicNames }) {
       repository {
         repositoryTopics(first: 100) {
           edges {
@@ -70,7 +70,7 @@ const removeAllTopics = gql`
       }
     }
   }
-`
+`;
 
 const Username = () => {
   const [{ data }] = useQuery({ query: getLogin });
@@ -78,14 +78,12 @@ const Username = () => {
   return <span>{data.viewer.login}</span>;
 };
 
-const noop = () => {};
-
 const Repos = () => {
   const [{ data }] = useQuery({
     query: getRepos,
     variables: { number_of_repos: 10 }
   });
-  const [_, executeRemoveAllTopicsMutation] = useMutation(removeAllTopics);
+  const [, executeUpdateTopics] = useMutation(updateTopics);
   return (
     <ul>
       {data.viewer.repositories.edges
@@ -97,10 +95,55 @@ const Repos = () => {
               topics={{
                 names: repo.repositoryTopics.edges.map(x => x.node.topic.name)
               }}
-              onAddTopics={noop}
-              onRemoveAllTopics={() => executeRemoveAllTopicsMutation({ id: repo.id })}
+              onAddTopics={() => {
+                const rawNewTopics = prompt(`Enter topics, separated by space`);
+                if (!rawNewTopics) {
+                  return;
+                }
+                const newTopics = rawNewTopics
+                  .split(" ")
+                  .map(x => x.trim())
+                  .filter(Boolean);
+                const topics = repo.repositoryTopics.edges.map(
+                  x => x.node.topic.name
+                );
+                executeUpdateTopics({
+                  id: repo.id,
+                  topicNames: topics.concat(newTopics)
+                });
+              }}
+              onRemoveAllTopics={() =>
+                executeUpdateTopics({ id: repo.id, topicNames: [] })
+              }
               renderTopic={topic => (
-                <Topic topic={topic} onRename={noop} onRemove={noop} />
+                <Topic
+                  topic={topic}
+                  onRename={() => {
+                    const newTopic = prompt(
+                      `Enter new name for topic "${topic}"`,
+                      topic
+                    );
+                    if (!newTopic) {
+                      return;
+                    }
+                    const topics = repo.repositoryTopics.edges.map(
+                      x => x.node.topic.name
+                    );
+                    executeUpdateTopics({
+                      id: repo.id,
+                      topicNames: topics.map(x => (x === topic ? newTopic : x))
+                    });
+                  }}
+                  onRemove={() => {
+                    const topics = repo.repositoryTopics.edges.map(
+                      x => x.node.topic.name
+                    );
+                    executeUpdateTopics({
+                      id: repo.id,
+                      topicNames: topics.filter(x => x !== topic)
+                    });
+                  }}
+                />
               )}
             />
           </li>
