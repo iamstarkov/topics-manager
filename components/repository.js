@@ -3,18 +3,18 @@ import PropTypes from "prop-types";
 import { ButtonAddTopics, ButtonRemoveAllTopics } from "./buttons";
 
 const Repository = ({
-  repo,
+  url,
+  name,
   topics,
   onAddTopics,
   onRemoveAllTopics,
   renderTopic
 }) => (
   <>
-    <a href={repo.html_url}>{repo.name}</a>{" "}
-    <ButtonAddTopics onClick={onAddTopics} />
-    {topics.names.length !== 0 && (
+    <a href={url}>{name}</a> <ButtonAddTopics onClick={onAddTopics} />
+    {topics.length !== 0 && (
       <ul>
-        {topics.names.map(topic => (
+        {topics.map(topic => (
           <li key={topic}>{renderTopic(topic)}</li>
         ))}
         <li key="remove-all">
@@ -26,8 +26,9 @@ const Repository = ({
 );
 
 Repository.propTypes = {
-  repo: PropTypes.shape().isRequired,
-  topics: PropTypes.shape().isRequired,
+  url: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  topics: PropTypes.arrayOf(PropTypes.string).isRequired,
   onAddTopics: PropTypes.func.isRequired,
   onRemoveAllTopics: PropTypes.func.isRequired,
   renderTopic: PropTypes.func.isRequired
