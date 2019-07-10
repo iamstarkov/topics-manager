@@ -130,7 +130,10 @@ const Repos = () => {
   );
 };
 
-function PageDashboard() {
+function PageDashboard(props) {
+  if (!props.isAuthorized) {
+    return <></>;
+  }
   return (
     <Layout title="Dashboard">
       <Wrapper>
@@ -148,10 +151,11 @@ function PageDashboard() {
 }
 
 PageDashboard.getInitialProps = ctx => {
-  if (!cookies(ctx).token) {
+  const isAuthorized = !!cookies(ctx).token;
+  if (!isAuthorized) {
     return auth.redirectToLogin(ctx);
   }
-  return {};
+  return { isAuthorized };
 };
 
 export default PageDashboard;
