@@ -5,6 +5,7 @@ import {
   fetchExchange,
   ssrExchange
 } from "urql";
+import { suspenseExchange } from "./suspense-exchange";
 
 import "isomorphic-unfetch";
 
@@ -24,8 +25,14 @@ export default function initUrqlClient(initialState, token) {
     urqlClient = createClient({
       url: "https://api.github.com/graphql",
       // Active suspense mode on the server-side
-      suspense: isServer,
-      exchanges: [dedupExchange, cacheExchange, ssrCache, fetchExchange],
+      suspense: true,
+      exchanges: [
+        dedupExchange,
+        cacheExchange,
+        ssrCache,
+        suspenseExchange,
+        fetchExchange
+      ],
       fetchOptions: { headers }
     });
   }
