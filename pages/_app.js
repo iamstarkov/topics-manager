@@ -32,9 +32,7 @@ class CustomApp extends App {
           <ReduxProvider store={store}>
             <CustomThemeProvider light={light} dark={dark}>
               <ClientSuspense fallback={<>Loading...</>}>
-                <React.unstable_ConcurrentMode>
-                  <Component {...pageProps} />
-                </React.unstable_ConcurrentMode>
+                <Component {...pageProps} />
               </ClientSuspense>
             </CustomThemeProvider>
           </ReduxProvider>
