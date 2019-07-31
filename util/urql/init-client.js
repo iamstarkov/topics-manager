@@ -27,9 +27,9 @@ export default function initUrqlClient(initialState, token) {
       suspense: true,
       exchanges: [
         dedupExchange,
+        suspenseExchange,
         cacheExchange,
         ssrCache,
-        suspenseExchange,
         fetchExchange
       ],
       fetchOptions: { headers }
