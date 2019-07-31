@@ -102,6 +102,7 @@ const Repos = () => {
               renderTopic={topic => (
                 <Topic
                   topic={topic}
+                  key={topic}
                   onRename={() => {
                     const newTopic = prompt(
                       `Enter new name for topic "${topic}"`,
