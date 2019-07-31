@@ -5,8 +5,7 @@ import {
   fetchExchange,
   ssrExchange
 } from "urql";
-import { suspenseExchange } from "./suspense-exchange";
-
+import { suspenseExchange } from "@urql/exchange-suspense";
 import "isomorphic-unfetch";
 
 let urqlClient = null;

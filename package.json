@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "@urql/exchange-suspense": "^0.1.0",
     "dotenv": "8.0.0",
     "graphql": "14.4.2",
     "graphql-tag": "2.10.1",
@@ -34,6 +35,7 @@
   "scripts": {
     "build": "next build",
     "start": "next start",
+    "dev": "now dev",
     "test": "jest",
     "tdd": "jest --watch",
     "lint": "eslint '**/*.js'",
