@@ -18,7 +18,7 @@ export default function initUrqlClient(initialState, token) {
   // Reuse the client on the client-side however
   const isServer = typeof window === "undefined";
   if (isServer || !urqlClient) {
-    ssrCache = ssrExchange({ initialState });
+    ssrCache = ssrExchange({ initialState, isClient: !isServer });
 
     const headers = !token ? {} : { Authorization: `Bearer ${token}` };
 
