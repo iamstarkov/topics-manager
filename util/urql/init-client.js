@@ -6,7 +6,6 @@ import {
   ssrExchange
 } from "urql";
 import { suspenseExchange } from "@urql/exchange-suspense";
-import { devtoolsExchange } from "@urql/devtools";
 import "isomorphic-unfetch";
 
 let urqlClient = null;
@@ -27,13 +26,12 @@ export default function initUrqlClient(initialState, token) {
       // Active suspense mode on the server-side
       suspense: true,
       exchanges: [
-        !isServer && devtoolsExchange,
         dedupExchange,
         suspenseExchange,
         cacheExchange,
         ssrCache,
         fetchExchange
-      ].filter(Boolean),
+      ],
       fetchOptions: { headers }
     });
   }

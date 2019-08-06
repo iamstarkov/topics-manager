@@ -31,7 +31,7 @@ class CustomApp extends App {
         <UrqlProvider value={urqlClient}>
           <ReduxProvider store={store}>
             <CustomThemeProvider light={light} dark={dark}>
-              <ClientSuspense fallback={<>Loading...</>}>
+              <ClientSuspense fallback="Loading...">
                 <Component {...pageProps} />
               </ClientSuspense>
             </CustomThemeProvider>
