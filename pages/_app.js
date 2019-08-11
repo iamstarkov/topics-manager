@@ -16,6 +16,13 @@ const dark = {
   background: "#111"
 };
 
+const ClientSuspense = props =>
+  typeof window !== "undefined" ? (
+    <React.Suspense {...props} />
+  ) : (
+    <>{props.children}</>
+  );
+
 class CustomApp extends App {
   render() {
     const { Component, pageProps, store, urqlClient } = this.props;
@@ -24,7 +31,9 @@ class CustomApp extends App {
         <UrqlProvider value={urqlClient}>
           <ReduxProvider store={store}>
             <CustomThemeProvider light={light} dark={dark}>
-              <Component {...pageProps} />
+              <ClientSuspense fallback="Loading...">
+                <Component {...pageProps} />
+              </ClientSuspense>
             </CustomThemeProvider>
           </ReduxProvider>
         </UrqlProvider>

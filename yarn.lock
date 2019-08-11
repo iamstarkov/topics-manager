@@ -1202,6 +1202,13 @@
   resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-12.0.11.tgz#a090d88e1f40a910e6443c95493c1c035c76ebdc"
   integrity sha512-IsU1TD+8cQCyG76ZqxP0cVFnofvfzT8p/wO8ENT4jbN/KKN3grsHFgHNl/U+08s33ayX4LwI85cEhYXCOlOkMw==
 
+"@urql/exchange-suspense@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@urql/exchange-suspense/-/exchange-suspense-0.1.0.tgz#75f1f928f949c1463458961c33640388f09c7efb"
+  integrity sha512-P8/bnvUFDWxWQPxEXvidUxZ5pBhqmTF2GWIkgMIo1F/c/ilf5YbmHLaMDTfbrVOEalBwwTCyZbypoX+ghs/xAQ==
+  dependencies:
+    wonka "^3.1.1"
+
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.8.5.tgz#51b1c5fe6576a34953bf4b253df9f0d490d9e359"
@@ -5147,9 +5154,9 @@ merge-stream@^2.0.0:
   integrity sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==
 
 merge2@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.2.3.tgz#7ee99dbd69bb6481689253f018488a1b902b0ed5"
-  integrity sha512-gdUU1Fwj5ep4kplwcmftruWofEFt6lfpkkr3h860CXbAB9c3hGb55EOL2ali0Td5oebvW0E1+3Sr+Ur7XfKpRA==
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.2.4.tgz#c9269589e6885a60cf80605d9522d4b67ca646e3"
+  integrity sha512-FYE8xI+6pjFOhokZu0We3S5NKCirLbCzSh2Usf3qEyr4X8U+0jNg9P8RZ4qz+V2UoECLVwSyzU3LxXBaLGtD3A==
 
 microevent.ts@~0.1.1:
   version "0.1.1"
@@ -7908,7 +7915,7 @@ wide-align@^1.1.0:
   dependencies:
     string-width "^1.0.2 || 2"
 
-wonka@^3.2.0:
+wonka@^3.1.1, wonka@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/wonka/-/wonka-3.2.0.tgz#40b9ce8e0c375127437661290e98e5d9e5278440"
   integrity sha512-sHCLouGzTclUlp1sdXAhuTqGMIoAQfpBit9puepaINPVqDBRtC8DPWtTUHC0DJIdFSO+DsO86AFBFCDor7Sn0g==
