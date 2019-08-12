@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import cookies from "next-cookies";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "urql";
@@ -149,6 +150,10 @@ function PageDashboard(props) {
     </Layout>
   );
 }
+
+PageDashboard.propTypes = {
+  isAuthorized: PropTypes.bool.isRequired
+};
 
 PageDashboard.getInitialProps = ctx => {
   const isAuthorized = !!cookies(ctx).token;

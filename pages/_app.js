@@ -24,6 +24,7 @@ class CustomApp extends App {
         <UrqlProvider value={urqlClient}>
           <ReduxProvider store={store}>
             <CustomThemeProvider light={light} dark={dark}>
+              {/* eslint-disable-next-line react/jsx-props-no-spreading */}
               <Component {...pageProps} />
             </CustomThemeProvider>
           </ReduxProvider>

@@ -1,11 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
 import nextCookies from "next-cookies";
 
 import ssrPrepass from "react-ssr-prepass";
 import initUrqlClient from "./init-client";
 
 const withUrqlClient = App => {
-  return class WithUrql extends React.Component {
+  class WithUrql extends React.Component {
     static async getInitialProps(ctx) {
       const { Component, router } = ctx;
       const { token } = nextCookies(ctx.ctx);
@@ -27,6 +28,7 @@ const withUrqlClient = App => {
       // Run suspense and hence all urql queries
       await ssrPrepass(
         <App
+          /* eslint-disable-next-line react/jsx-props-no-spreading */
           {...appProps}
           Component={Component}
           router={router}
@@ -54,9 +56,20 @@ const withUrqlClient = App => {
     }
 
     render() {
+      /* eslint-disable-next-line react/jsx-props-no-spreading */
       return <App {...this.props} urqlClient={this.urqlClient} />;
     }
+  }
+
+  WithUrql.propTypes = {
+    /* should be PropTypes.instanceOf(urqlClient), but i dont know how to get it */
+    /* eslint-disable-next-line react/forbid-prop-types */
+    urqlClient: PropTypes.any.isRequired,
+    urqlState: PropTypes.shape({}).isRequired,
+    token: PropTypes.string
   };
+
+  return WithUrql;
 };
 
 export default withUrqlClient;
