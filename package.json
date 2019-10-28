@@ -27,7 +27,7 @@
     "redux": "4.0.4",
     "redux-devtools-extension": "2.13.8",
     "redux-thunk": "2.3.0",
-    "styled-components": "4.3.2",
+    "styled-components": "4.4.0",
     "unfetch": "4.1.0",
     "urql": "1.6.1"
   },
