@@ -5,10 +5,25 @@ import { createGlobalStyle } from "styled-components";
 
 const defaultTitle = "Topics Manager";
 
+const light = {
+  color: "#222",
+  background: "#fff"
+};
+const dark = {
+  color: "#f5f5f5",
+  background: "#111"
+};
+
 const GlobalStyle = createGlobalStyle`
   body {
-    color: ${p => p.theme.color};
-    background: ${p => p.theme.background};
+    color: ${light.color};
+    background: ${light.background};
+  }
+  @media(prefers-color-scheme: dark) {
+    body {
+      color: ${dark.color};
+      background: ${dark.background};
+    }
   }
   body a {
    color: inherit;
