@@ -8,7 +8,6 @@ import Wrapper from "../components/wrapper";
 import Layout from "../components/layout";
 import Repository from "../components/repository";
 import Topic from "../components/topic";
-import Toggler from "../components/toggler";
 
 const getRepos = gql`
   query($number_of_repos: Int!) {
@@ -144,7 +143,6 @@ function PageDashboard(props) {
             (<a href="/logout">logout</a>)
           </small>
         </h1>
-        <Toggler />
         <Repos />
       </Wrapper>
     </Layout>
