@@ -16,7 +16,10 @@ class PageIndex extends React.Component {
     return (
       <Layout>
         <Wrapper>
-          <h1>Welcome to Topics Manager!</h1>
+          <h1>
+            Welcome to{" "}
+            <span style={{ whiteSpace: "nowrap" }}>Topics Manager!</span>
+          </h1>
           <p>
             This app aims to address inconvenience of default topics editing
             interface. Topics Manager will give a dashboard to overview and edit
