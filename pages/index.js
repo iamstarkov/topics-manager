@@ -18,7 +18,7 @@ class PageIndex extends React.Component {
         <Wrapper>
           <h1>
             Welcome to{" "}
-            <span style={{ whiteSpace: "nowrap;" }}>Topics Manager!</span>
+            <span style={{ whiteSpace: "nowrap" }}>Topics Manager!</span>
           </h1>
           <p>
             This app aims to address inconvenience of default topics editing
