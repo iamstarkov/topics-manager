@@ -1,5 +1,5 @@
 import React from "react";
-import App, { Container } from "next/app";
+import App from "next/app";
 import withRedux from "next-redux-wrapper";
 import { Provider as ReduxProvider } from "react-redux";
 import { Provider as UrqlProvider } from "urql";
@@ -10,14 +10,12 @@ class CustomApp extends App {
   render() {
     const { Component, pageProps, store, urqlClient } = this.props;
     return (
-      <Container>
-        <UrqlProvider value={urqlClient}>
-          <ReduxProvider store={store}>
-            {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-            <Component {...pageProps} />
-          </ReduxProvider>
-        </UrqlProvider>
-      </Container>
+      <UrqlProvider value={urqlClient}>
+        <ReduxProvider store={store}>
+          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+          <Component {...pageProps} />
+        </ReduxProvider>
+      </UrqlProvider>
     );
   }
 }
