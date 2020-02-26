@@ -42,7 +42,7 @@
     "validate": "yarn run lint && yarn run test"
   },
   "devDependencies": {
-    "babel-eslint": "10.0.2",
+    "babel-eslint": "10.1.0",
     "babel-jest": "24.9.0",
     "eslint": "6.4.0",
     "eslint-config-airbnb": "18.0.1",
