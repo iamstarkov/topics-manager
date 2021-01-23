@@ -29,7 +29,7 @@
     "redux-thunk": "2.3.0",
     "styled-components": "4.4.1",
     "unfetch": "4.1.0",
-    "urql": "1.6.1"
+    "urql": "1.11.6"
   },
   "scripts": {
     "dev": "now dev",
