@@ -10,7 +10,7 @@
   },
   "private": true,
   "dependencies": {
-    "dotenv": "8.1.0",
+    "dotenv": "8.6.0",
     "graphql": "14.4.2",
     "graphql-tag": "2.10.1",
     "isomorphic-unfetch": "3.0.0",
